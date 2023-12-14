@@ -1,7 +1,7 @@
 package com.zirtoshka.zirtoshka.db;
 
 import com.zirtoshka.zirtoshka.beans.Coordinates;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,8 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "HitResult")
-public class HitRRResult implements Serializable {
+@Table(name = "hit_result")
+public class HitResult implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ToString.Exclude
@@ -25,7 +25,7 @@ public class HitRRResult implements Serializable {
     private String currentTime;
     private boolean result;
     private boolean removed = false;
-    public HitRRResult(String sessionId, Coordinates coordinates, String currentTime, boolean result){
+    public HitResult(String sessionId, Coordinates coordinates, String currentTime, boolean result){
         this.sessionId = sessionId;
         this.x = coordinates.getX();
         this.y = coordinates.getY();

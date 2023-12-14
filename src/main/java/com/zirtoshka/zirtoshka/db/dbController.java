@@ -2,7 +2,10 @@ package com.zirtoshka.zirtoshka.db;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -12,46 +15,56 @@ import java.util.List;
 @ApplicationScoped
 public class dbController {
     private SessionFactory factory;
+    private StandardServiceRegistry registry;
     private Session session;
     //TODO: fix sout
 
-    public dbController(){
+    public dbController() {
         try {
-            this.factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(HitRRResult.class).buildSessionFactory();
+            this.registry = new StandardServiceRegistryBuilder().configure().build();
+            MetadataSources sources = new MetadataSources(registry);
+            Metadata metadata = sources.getMetadataBuilder().build();
+            this.factory = metadata.getSessionFactoryBuilder().build();
+//            this.factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(HitRRResult.class).buildSessionFactory();
             this.createSession();
         } catch (Exception e) {
             System.out.println("db error");
         }
     }
-//    private void createSession() {this.session = factory.openSession();}
-    private void createSession() {this.session = factory.getCurrentSession();}
+
+    //    private void createSession() {this.session = factory.openSession();}
+    private void createSession() {
+        this.session = this.factory.openSession();
+    }
 
 
-    public List<HitRRResult> getUserHits(String sessionId){
-        if (sessionId == null) return  null;
+    public List<HitResult> getUserHits(String sessionId) {
+        if (sessionId == null) return null;
         createSession();
-        this.session.beginTransaction();
+        //this.session.beginTransaction();
 //        String sqlRequest = "FROM HitRRResult hit WHERE hit.sessionId= :sessionId AND hit.removed=false";
-        List<HitRRResult> results = this.session.createQuery("from HitRRResult hit", HitRRResult.class).getResultList();
+        List<HitResult> results = this.session.createQuery("from HitResult hit", HitResult.class).getResultList();
 
 //        List<HitRRResult> results = this.session.createQuery("FROM HitRRResult hit WHERE hit.sessionId= :sessionId AND hit.removed=false", HitRRResult.class).setParameter("sessionId", sessionId).getResultList();
-        this.session.getTransaction().commit();
-        System.out.println("get hits from db: "+results.size());
+        //this.session.getTransaction().commit();
+        System.out.println("get hits from db: " + results.size());
         return results;
     }
-    public void addHitResult(HitRRResult hitresult){
+
+    public void addHitResult(HitResult hitresult) {
         if (hitresult == null) return;
         createSession();
         this.session.beginTransaction();
         this.session.save(hitresult);
         this.session.getTransaction().commit();
     }
+
     //TODO: fix DB props and create DB local and helios
-    public void markUserHitsRemoved(String sessionId){
+    public void markUserHitsRemoved(String sessionId) {
         if (sessionId == null) return;
         createSession();
         this.session.beginTransaction();
-        this.session.createQuery("update HitRRResult set removed=true where sessionId= :sessionId").setParameter("sessionId", sessionId).executeUpdate();
+        this.session.createQuery("update HitResult set removed=true where sessionId= :sessionId").setParameter("sessionId", sessionId).executeUpdate();
         this.session.getTransaction().commit();
     }
 }

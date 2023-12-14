@@ -1,6 +1,6 @@
 package com.zirtoshka.zirtoshka.beans;
 
-import com.zirtoshka.zirtoshka.db.HitRRResult;
+import com.zirtoshka.zirtoshka.db.HitResult;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import java.util.function.Function;
 
 public class ClientBean implements Serializable {
     private final String sessionId;
-    private final LinkedList<HitRRResult> currentHits;
+    private final LinkedList<HitResult> currentHits;
 
     @ManagedProperty(value = "#{coordinates}")
     private Coordinates coordinates = new Coordinates();
@@ -58,7 +58,7 @@ public class ClientBean implements Serializable {
 
     public void makeRequest(Coordinates coordinates) {
         System.out.println("make rq");
-        HitRRResult res = service.processRequest(this.sessionId, coordinates);
+        HitResult res = service.processRequest(this.sessionId, coordinates);
 
         if (res != null) {
             this.currentHits.addFirst(res);

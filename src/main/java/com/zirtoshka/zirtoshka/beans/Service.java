@@ -1,6 +1,6 @@
 package com.zirtoshka.zirtoshka.beans;
 
-import com.zirtoshka.zirtoshka.db.HitRRResult;
+import com.zirtoshka.zirtoshka.db.HitResult;
 import com.zirtoshka.zirtoshka.db.dbController;
 import com.zirtoshka.zirtoshka.utils.AreaCheck;
 import com.zirtoshka.zirtoshka.utils.Validation;
@@ -30,23 +30,23 @@ public class Service implements Serializable {
         areaCheck = new AreaCheck();
         dbController = new dbController();
     }
-    public LinkedList<HitRRResult> getUserHits(String sessionId) {
+    public LinkedList<HitResult> getUserHits(String sessionId) {
         System.out.println(4);
         if (sessionId == null) return new LinkedList<>();
         System.out.println(5);
-        List<HitRRResult> hits = dbController.getUserHits(sessionId);
+        List<HitResult> hits = dbController.getUserHits(sessionId);
         System.out.println("userhits" + hits);
         return hits != null ? new LinkedList<>(hits) : new LinkedList<>();
     }
-    public HitRRResult processRequest(String sessionId, Coordinates coordinates) {
+    public HitResult processRequest(String sessionId, Coordinates coordinates) {
         if (!Validation.validate(coordinates)) {
             System.out.println("Not valid");
             return null;
         }
         boolean isHit = areaCheck.isHit(coordinates);
-        HitRRResult hitRRResult = new HitRRResult(sessionId, coordinates, getCurrentDate(), isHit);
-        dbController.addHitResult(hitRRResult);
-        return hitRRResult;
+        HitResult hitResult = new HitResult(sessionId, coordinates, getCurrentDate(), isHit);
+        dbController.addHitResult(hitResult);
+        return hitResult;
     }
 
     public void clearUserHits(String sessionId) {dbController.markUserHitsRemoved(sessionId);}
