@@ -1,11 +1,12 @@
 package com.zirtoshka.zirtoshka.beans;
 
-import com.zirtoshka.zirtoshka.db.HitResult;
+import com.zirtoshka.zirtoshka.db.HitRRResult;
 import com.zirtoshka.zirtoshka.db.dbController;
 import com.zirtoshka.zirtoshka.utils.AreaCheck;
 import com.zirtoshka.zirtoshka.utils.Validation;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +21,7 @@ import java.util.List;
 @Setter
 @ToString
 @ApplicationScoped
-@Named
+@Named("service")
 public class Service implements Serializable {
     private final AreaCheck areaCheck;
     private final dbController dbController;
@@ -29,21 +30,23 @@ public class Service implements Serializable {
         areaCheck = new AreaCheck();
         dbController = new dbController();
     }
-    public LinkedList<HitResult> getUserHits(String sessionId) {
+    public LinkedList<HitRRResult> getUserHits(String sessionId) {
+        System.out.println(4);
         if (sessionId == null) return new LinkedList<>();
-        List<HitResult> hits = dbController.getUserHits(sessionId);
+        System.out.println(5);
+        List<HitRRResult> hits = dbController.getUserHits(sessionId);
         System.out.println("userhits" + hits);
         return hits != null ? new LinkedList<>(hits) : new LinkedList<>();
     }
-    public HitResult processRequest(String sessionId, Coordinates coordinates) {
+    public HitRRResult processRequest(String sessionId, Coordinates coordinates) {
         if (!Validation.validate(coordinates)) {
             System.out.println("Not valid");
             return null;
         }
         boolean isHit = areaCheck.isHit(coordinates);
-        HitResult hitResult = new HitResult(sessionId, coordinates, getCurrentDate(), isHit);
-        dbController.addHitResult(hitResult);
-        return hitResult;
+        HitRRResult hitRRResult = new HitRRResult(sessionId, coordinates, getCurrentDate(), isHit);
+        dbController.addHitResult(hitRRResult);
+        return hitRRResult;
     }
 
     public void clearUserHits(String sessionId) {dbController.markUserHitsRemoved(sessionId);}

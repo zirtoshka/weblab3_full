@@ -1,7 +1,7 @@
 package com.zirtoshka.zirtoshka.beans;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import lombok.*;
 
 import java.io.Serializable;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Named
+@Named("coordinates")
 @RequestScoped
 public class Coordinates implements Serializable {
     private double x;

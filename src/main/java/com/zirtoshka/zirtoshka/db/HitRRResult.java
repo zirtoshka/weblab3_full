@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "HitResult")
-public class HitResult implements Serializable {
+public class HitRRResult implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ToString.Exclude
@@ -25,7 +25,7 @@ public class HitResult implements Serializable {
     private String currentTime;
     private boolean result;
     private boolean removed = false;
-    public HitResult(String sessionId, Coordinates coordinates, String currentTime, boolean result){
+    public HitRRResult(String sessionId, Coordinates coordinates, String currentTime, boolean result){
         this.sessionId = sessionId;
         this.x = coordinates.getX();
         this.y = coordinates.getY();
