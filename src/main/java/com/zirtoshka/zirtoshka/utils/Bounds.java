@@ -1,9 +1,9 @@
 package com.zirtoshka.zirtoshka.utils;
 //TODO: fix bounds
 public enum Bounds {
-    X_BOUNDS(0 ,0 , true),
-    Y_BOUNDS(0,0, true),
-    R_BOUNDS(0,0, true);
+    X_BOUNDS(-5 ,3 , true),
+    Y_BOUNDS(-5,3, false),
+    R_BOUNDS(2,5, true);
     private final double left;
     private final double right;
     private final boolean inclusive;

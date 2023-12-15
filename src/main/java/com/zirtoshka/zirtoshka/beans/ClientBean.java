@@ -31,11 +31,8 @@ public class ClientBean implements Serializable {
     private Service service = new Service();
 
     public ClientBean() {
-        System.out.println(1);
         this.sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
-        System.out.println(2);
         this.currentHits = service.getUserHits(sessionId);
-        System.out.println(3);
     }
 
 
@@ -45,11 +42,12 @@ public class ClientBean implements Serializable {
     }
 
     public void makeRemoteRequest() {
-        Function<String, Double> getParam = (name) -> {
-            return Double.parseDouble(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(name));
-        };
+//        Function<String, Double> getParam = (name) -> {
+//            return Double.parseDouble(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(name));
+//        };
         try {
-            Coordinates coordinates = new Coordinates(getParam.apply("x"), getParam.apply("y"), getParam.apply("r"));
+            System.out.println(coordinates.getY()+"it is y from user");
+//            Coordinates coordinates = new Coordinates(getParam.apply("x"), getParam.apply("y"), getParam.apply("r"));
             makeRequest(coordinates);
         } catch (NullPointerException | NumberFormatException exception) {
             System.out.println("error in params");
@@ -59,10 +57,11 @@ public class ClientBean implements Serializable {
     public void makeRequest(Coordinates coordinates) {
         System.out.println("make rq");
         HitResult res = service.processRequest(this.sessionId, coordinates);
-
+        System.out.println(333);
         if (res != null) {
             this.currentHits.addFirst(res);
         }
+        System.out.println(4444);
     }
 
     public void clearHits() {

@@ -34,19 +34,19 @@ public class dbController {
 
     //    private void createSession() {this.session = factory.openSession();}
     private void createSession() {
-        this.session = this.factory.openSession();
+        this.session = this.factory.getCurrentSession();
     }
 
 
     public List<HitResult> getUserHits(String sessionId) {
         if (sessionId == null) return null;
         createSession();
-        //this.session.beginTransaction();
-//        String sqlRequest = "FROM HitRRResult hit WHERE hit.sessionId= :sessionId AND hit.removed=false";
-        List<HitResult> results = this.session.createQuery("from HitResult hit", HitResult.class).getResultList();
+        this.session.beginTransaction();
+        String sqlRequest = "from HitResult hit where hit.sessionId= :sessionId AND hit.removed=false";
+//        List<HitResult> results = this.session.createQuery("from HitResult hit", HitResult.class).getResultList();
 
-//        List<HitRRResult> results = this.session.createQuery("FROM HitRRResult hit WHERE hit.sessionId= :sessionId AND hit.removed=false", HitRRResult.class).setParameter("sessionId", sessionId).getResultList();
-        //this.session.getTransaction().commit();
+            List<HitResult> results = this.session.createQuery(sqlRequest, HitResult.class).setParameter("sessionId", sessionId).getResultList();
+        this.session.getTransaction().commit();
         System.out.println("get hits from db: " + results.size());
         return results;
     }
@@ -55,7 +55,10 @@ public class dbController {
         if (hitresult == null) return;
         createSession();
         this.session.beginTransaction();
-        this.session.save(hitresult);
+        System.out.println(hitresult);
+        System.out.println(hitresult);
+        this.session.persist(hitresult);
+//        this.session.save(hitresult);
         this.session.getTransaction().commit();
     }
 

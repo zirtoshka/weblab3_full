@@ -13,9 +13,11 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -44,14 +46,15 @@ public class Service implements Serializable {
             return null;
         }
         boolean isHit = areaCheck.isHit(coordinates);
-        HitResult hitResult = new HitResult(sessionId, coordinates, getCurrentDate(), isHit);
+        HitResult hitResult = new HitResult(sessionId, coordinates, isHit, getCurrentDate());
+        System.out.println(hitResult);
         dbController.addHitResult(hitResult);
         return hitResult;
     }
 
     public void clearUserHits(String sessionId) {dbController.markUserHitsRemoved(sessionId);}
     public String getCurrentDate() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withLocale(Locale.UK).withZone(ZoneId.systemDefault()));
     }
 
 }
