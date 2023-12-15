@@ -70,4 +70,6 @@ public class dbController {
         this.session.createQuery("update HitResult set removed=true where sessionId= :sessionId").setParameter("sessionId", sessionId).executeUpdate();
         this.session.getTransaction().commit();
     }
+
+
 }

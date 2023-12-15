@@ -33,9 +33,7 @@ public class Service implements Serializable {
         dbController = new dbController();
     }
     public LinkedList<HitResult> getUserHits(String sessionId) {
-        System.out.println(4);
         if (sessionId == null) return new LinkedList<>();
-        System.out.println(5);
         List<HitResult> hits = dbController.getUserHits(sessionId);
         System.out.println("userhits" + hits);
         return hits != null ? new LinkedList<>(hits) : new LinkedList<>();
