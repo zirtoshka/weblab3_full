@@ -45,7 +45,7 @@ public class dbController {
         String sqlRequest = "from HitResult hit where hit.sessionId= :sessionId AND hit.removed=false";
 //        List<HitResult> results = this.session.createQuery("from HitResult hit", HitResult.class).getResultList();
 
-            List<HitResult> results = this.session.createQuery(sqlRequest, HitResult.class).setParameter("sessionId", sessionId).getResultList();
+        List<HitResult> results = this.session.createQuery(sqlRequest, HitResult.class).setParameter("sessionId", sessionId).getResultList();
         this.session.getTransaction().commit();
         System.out.println("get hits from db: " + results.size());
         return results;

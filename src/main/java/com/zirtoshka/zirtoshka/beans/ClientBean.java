@@ -2,6 +2,7 @@ package com.zirtoshka.zirtoshka.beans;
 
 import com.zirtoshka.zirtoshka.db.HitResult;
 
+import com.zirtoshka.zirtoshka.utils.Validation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -48,6 +49,10 @@ public class ClientBean implements Serializable {
 //        };
         try {
             System.out.println(coordinates.getY() + "it is y from user");
+            if (!Validation.validate(coordinates)) {
+                System.out.println("Not valid");
+                throw new NumberFormatException();
+            }
 //            Coordinates coordinates = new Coordinates(getParam.apply("x"), getParam.apply("y"), getParam.apply("r"));
             makeRequest(coordinates);
         } catch (NullPointerException | NumberFormatException exception) {

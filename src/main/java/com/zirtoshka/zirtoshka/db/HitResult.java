@@ -25,11 +25,11 @@ public class HitResult implements Serializable {
     @Column(nullable = false, name = "session_id")
     private String sessionId;
     @Column(nullable = false)
-    private double x;
+    private Double x;
     @Column(nullable = false)
-    private double y;
+    private Double y;
     @Column(nullable = false)
-    private double r;
+    private Double r;
     @Column(nullable = false, name = "cr_time")
     private String currentTime;
     @Column(nullable = false)
@@ -48,16 +48,4 @@ public class HitResult implements Serializable {
         this.result = result;
     }
 
-//    @PrePersist
-//    protected void prePersist() {
-//        this.currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-//        this.result = checkHit();
-//    }
-
-    private boolean checkHit() {
-        boolean area1_hit = x >= 0 && y >= 0 && x <= r && y <= r / 2;
-        boolean area2_hit = x >= 0 && y <= 0 && y >= x - r / 2;
-        boolean area3_hit = x <= 0 && y >= 0 && x * x + y * y <= r * r;
-        return area1_hit || area2_hit || area3_hit;
-    }
 }

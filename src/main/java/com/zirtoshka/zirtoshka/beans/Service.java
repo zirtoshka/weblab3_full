@@ -39,10 +39,10 @@ public class Service implements Serializable {
         return hits != null ? new LinkedList<>(hits) : new LinkedList<>();
     }
     public HitResult processRequest(String sessionId, Coordinates coordinates) {
-        if (!Validation.validate(coordinates)) {
-            System.out.println("Not valid");
-            return null;
-        }
+//        if (!Validation.validate(coordinates)) {
+//            System.out.println("Not valid");
+//            return null;
+//        }
         boolean isHit = areaCheck.isHit(coordinates);
         HitResult hitResult = new HitResult(sessionId, coordinates, isHit, getCurrentDate());
         System.out.println(hitResult);
