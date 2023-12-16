@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://primefaces.org/ui ">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="assets/css/start.css"/>
+    <title>puk puk 3</title>
+    <script>        src = "https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"
+    type = "text/javascript"
+    charset = "UTF-8"
+    </script>
+</h:head>
+
+<h:body>
+    <header class="header">
+        <h1> Zaitseva Irina Sergeevna P3209 95734</h1>
+    </header>
+
+    <h:form id="user-request">
+        <h1>Data input</h1>
+
+
+
+        <h:outputLabel value="X:"/>
+        <h:inputText value="#{client.coordinates.x}"/>
+
+        <p>
+            <label for="y">Y: </label>
+            <h:inputText
+                    id="y"
+                    value="${client.coordinates.y}"
+                    required="true"
+
+                    converterMessage="It should be a number"
+                    requiredMessage="This is a necessary parameter"
+            >
+                <f:validator validatorId="formValidator" for="y" />
+
+            </h:inputText>
+            <h:message for="y" styleClass="error" />
+        </p>
+
+        <h:outputLabel value="R:"/>
+        <h:inputText value="#{client.coordinates.r}"/>
+
+
+
+        <h:commandButton value="Make Remote Request" action="#{client.makeRemoteRequest}"/>
+
+
+
+    </h:form>
+    <h:form styleClass="navigate">
+        <h:commandButton action="navigateStart" styleClass="button" value="to start page"/>
+    </h:form>
+
+
+
+    <!--    <script src="js/animations.js" type="text/javascript"></script>-->
+    <!--    <script src="js/form.js" type="module"></script>-->
+    <!--    <script src="js/utils.js" type="module"></script>-->
+
+    <script src="assets/js/graph.js" type="module"></script>
+    <p:remoteCommand name="addDotFromCanvas" action="#{client.makeCanvasRequest()}" update="results-table" process="@this"/>
+
+
+    <!--
+       Table with previous hits
+   -->
+    <h:dataTable id="results-table" value="#{client.currentHits}" var="hit" columnClasses="x-column,y-column,r-column,time-column,res-column">
+        <h:column>
+            <f:facet name="header">X</f:facet>
+            <h:outputText value="#{hit.x}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Y</f:facet>
+            <h:outputText value="#{hit.y}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">R</f:facet>
+            <h:outputText value="#{hit.r}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Current Time</f:facet>
+            <h:outputText value="#{hit.currentTime}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Result</f:facet>
+            <h:outputText value="#{hit.result ? 'kill' : 'miss'}" styleClass="#{hit.result ? 'text-green' : 'text-red'}"/>
+        </h:column>
+    </h:dataTable>
+
+
+    <div class="graph-canvas">
+        <canvas width="517" height="520" id="coordinateCanvas">
+        </canvas>
+    </div>
+
+
+
+
+
+
+
+
+</h:body>
+
+</html>
