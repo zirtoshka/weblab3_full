@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.context.FacesContext;
@@ -22,8 +23,7 @@ import java.util.function.Function;
 @Setter
 @ToString
 @Named("client")
-@SessionScoped
-
+@ApplicationScoped
 public class ClientBean implements Serializable {
     private final String sessionId;
     private final LinkedList<HitResult> currentHits;
