@@ -38,6 +38,10 @@ public class ClientBean implements Serializable {
         this.currentHits = service.getUserHits(sessionId);
     }
 
+    public void updateXWithValue(Double value) {
+        coordinates.setX(value);
+    }
+
 
     public void makeUserRequest() {
         makeRequest(this.coordinates);

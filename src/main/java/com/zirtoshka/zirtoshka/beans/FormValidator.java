@@ -23,7 +23,7 @@ public class FormValidator implements Validator {
     }
 
     protected void validateY(Double y) throws ValidatorException {
-        if (y < -5.d || y > 3.d) {
+        if (y <= -5.d || y >= 3.d) {
             error(" Y should be in range (-5;3)");
         }
     }

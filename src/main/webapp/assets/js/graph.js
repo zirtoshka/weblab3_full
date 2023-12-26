@@ -6,7 +6,6 @@ const centerY = canvas.height / 2;
 const pxR = 50;
 const ctx = canvas.getContext('2d');
 var rValue = null;
-
 export function updateR(r) {
     console.log("sdfmsdflklkferklfkerfepkfrfkref");
     rValue = r;
@@ -14,10 +13,16 @@ export function updateR(r) {
 }
 
 
-document.getElementById('user-request:slider').onmousemove = (() => {
+document.getElementById('user-request:slider').onSlideEnd = (() => {
+    console.log("suka")
     updateR(document.getElementById('user-request:r').value);
+    drawPointsFromTable();
 })
 
+function updateRValue(newValue) {
+    rValue = newValue;
+    console.log('Updated rValue:', rValue);
+}
 document.addEventListener('DOMContentLoaded', function () {
     drawGraph();
     let storedPoints = sessionStorage.getItem('points');
@@ -41,13 +46,14 @@ canvas.addEventListener('click', function (event) {
             let r = rValue;
             let x = xFromCanvas(loc.x);
             let y = yFromCanvas(loc.y);
+           // updateTextInputs(x,y);
             let storagePoints = JSON.parse(sessionStorage.getItem('points'));
 
             storagePoints.push(JSON.stringify({"x": x, "y": y}));
 
             sessionStorage.setItem('points', JSON.stringify(storagePoints));
 
-            drawPoint(x, y, r);
+
             console.log(x);
             console.log(y);
             console.log(r);
@@ -60,6 +66,7 @@ canvas.addEventListener('click', function (event) {
                     {name: "r", value: r.toString()}
                 ]
             )
+            drawPointsFromTable();
 
         }
     }
@@ -72,6 +79,12 @@ export function drawPoints() {
         console.log(point.x);
         drawPoint(point.x, point.y, true);
     }
+}
+
+function   updateTextInputs(x,y){
+    document.getElementById("x").setAttribute("value", x);
+    document.getElementById("y").setAttribute("value", y);
+
 }
 
 //todo wtf blin
@@ -133,7 +146,7 @@ export function drawGraph() {
     drawTicks(ctx, centerX, centerY, axisLength, 'y');
     drawAxisLabel(ctx, 'Y', centerX - 20, 10);
 
-
+    if(rValue){
     drawAxisLabel(ctx, 'R', centerX + r, centerY - 5);
     drawAxisLabel(ctx, 'R/2', centerX + r / 2, centerY - 5);
     drawAxisLabel(ctx, 'R', centerX + 5, centerY - r);
@@ -141,7 +154,7 @@ export function drawGraph() {
     drawAxisLabel(ctx, '- R', centerX - r, centerY - 5);
     drawAxisLabel(ctx, '- R/2', centerX - r / 2, centerY - 5);
     drawAxisLabel(ctx, '- R', centerX + 5, centerY + r);
-    drawAxisLabel(ctx, '- R/2', centerX + 5, centerY + r / 2);
+    drawAxisLabel(ctx, '- R/2', centerX + 5, centerY + r / 2);}
 
 
     // points
@@ -172,13 +185,22 @@ export function drawPoint(x, y, res) {
 
 
 function drawPointsFromTable() {
-    const shotRows = document.querySelectorAll('#results_table tbody tr')
-    shotRows.forEach(row => {
-        const cells = row.querySelectorAll('td')
-        if (cells.length !== 4) return
-        const [x, y, r, res] = [1, 2, 3, true];
-        if (r === rValue) drawPoint(x, y, res);
-    })
+    var table = document.getElementById('results-table'); // Получаем таблицу по её id
+    var rows = table.getElementsByTagName('tr'); // Получаем все строки таблицы
+
+    // Проходимся по каждой строке таблицы, начиная с 1, чтобы пропустить заголовок
+    for (var i = 1; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
+        var x = cells[0].innerText; // Значение X в первой ячейке
+        var y = cells[1].innerText; // Значение Y во второй ячейке
+        var r = cells[3].innerText; // Значение R
+        var result = cells[4].innerText; // Значение Result в пятой ячейке
+
+        // Обработка значений x, y, result
+        if (r===rValue){
+            console.log("sdfsdf");
+        drawPoint(x, y, result=="kill");}
+    }
 }
 
 export function drawArrow(context, fromX, fromY, toX, toY) {
