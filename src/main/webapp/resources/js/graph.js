@@ -8,7 +8,7 @@ var rValue = null;
 
 function updateR(event, ui) {
     rValue = ui.value;
-    alert(rValue);
+    // alert(rValue);
     drawGraph();
     drawPointsFromTable();
 }
@@ -23,6 +23,7 @@ function updateRValue(newValue) {
 
 canvas.addEventListener('click', function (event) {
     console.log(rValue);
+    drawPointsFromTable();
         if (rValue == null) showToast("Can't find coordinates, please choose value for r")
         else {
             let loc = windowToCanvas(canvas, event.clientX, event.clientY);
@@ -30,6 +31,7 @@ canvas.addEventListener('click', function (event) {
             let x = xFromCanvas(loc.x);
             let y = yFromCanvas(loc.y);
            // updateTextInputs(x,y);
+
             addDotFromCanvas(
                 [
                     {name: "x", value: x.toString()},
@@ -39,7 +41,7 @@ canvas.addEventListener('click', function (event) {
             )
 
         }
-    drawPointsFromTable();
+
     }
 );
 
@@ -159,17 +161,20 @@ function drawGraph() {
 function drawPointsFromTable() {
     var table = document.getElementById('results-table'); // Получаем таблицу по её id
     var rows = table.getElementsByTagName('tr'); // Получаем все строки таблицы
-alert(rValue);
+// alert(rValue);
     // Проходимся по каждой строке таблицы, начиная с 1, чтобы пропустить заголовок
-    for (var i = 1; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
-        var x = cells[0].innerText; // Значение X в первой ячейке
-        var y = cells[1].innerText; // Значение Y во второй ячейке
-        var r = cells[3].innerText; // Значение R
-        var result = cells[4].innerText; // Значение Result в пятой ячейке
+    for (let i = 1; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
+        let x = cells[0].innerText; // Значение X в первой ячейке
+        let y = cells[1].innerText; // Значение Y во второй ячейке
+        let r = cells[2].innerText; // Значение R
+        let result = cells[4].innerText; // Значение Result в пятой ячейке
 
         // Обработка значений x, y, result
-        if (r===rValue){
+        console.log(r);
+        console.log(rValue);
+        console.log("sssssssss")
+        if (r==rValue){
             console.log("sdfsdf");
         drawPoint(x, y, result=="kill");}
     }
