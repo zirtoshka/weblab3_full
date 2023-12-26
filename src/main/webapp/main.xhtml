@@ -15,7 +15,6 @@
     type = "text/javascript"
     charset = "UTF-8"
     </script>
-    <script src="assets/js/graph.js" type="module"></script>
 </h:head>
 
 <h:body>
@@ -96,7 +95,7 @@
                 <p:slider for="r" minValue="2" maxValue="5" step="0.1" range="false"
                           style="width:200px; background-color: blueviolet"
                           id="slider"
-                          onSlideEnd="updateR(value)"/>
+                          onSlideEnd="updateR(PF('yourFormId:slider').getValue())"/>
                 <h:message for="r" styleClass="error"/>
             </p>
 
@@ -149,6 +148,8 @@
         </div>
 
     </div>
+
+    <h:outputScript library="js" name="graph.js"></h:outputScript>
 
 </h:body>
 
