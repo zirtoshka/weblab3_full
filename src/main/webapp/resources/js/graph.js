@@ -3,27 +3,32 @@ const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 const pxR = 50;
 const ctx = canvas.getContext('2d');
-var rValue = null;
+
+var sessionStorage = window.sessionStorage;
+var rValue = sessionStorage.getItem("r-value");
 
 
 function updateR(event, ui) {
     rValue = ui.value;
-    // alert(rValue);
+    sessionStorage.setItem("r-value", rValue);
     drawGraph();
     drawPointsFromTable();
 }
 
 
 
-function updateRValue(newValue) {
-    rValue = newValue;
-    console.log('Updated rValue:', rValue);
-}
+
+document.addEventListener('DOMContentLoaded', function () {
+    rValue = sessionStorage.getItem("r-value");
+    drawGraph();
+    drawPointsFromTable();
+});
 
 
 canvas.addEventListener('click', function (event) {
     console.log(rValue);
-    drawPointsFromTable();
+
+    // drawPointsFromTable();
         if (rValue == null) showToast("Can't find coordinates, please choose value for r")
         else {
             let loc = windowToCanvas(canvas, event.clientX, event.clientY);
@@ -41,6 +46,7 @@ canvas.addEventListener('click', function (event) {
             )
 
         }
+    drawPointsFromTable();
 
     }
 );
@@ -143,28 +149,40 @@ function drawGraph() {
     ctx.beginPath();
     if (res) {
         ctx.fillStyle = 'rgb(6,246,23)';
-
+        ctx.strokeStyle = 'rgb(6,246,23)';
     } else {
-        ctx.fillStyle = 'rgb(17,3,3)';
+        ctx.fillStyle = 'rgb(248,0,0)';
+        ctx.strokeStyle = 'rgb(248,0,0)';
     }
     ctx.moveTo(x, y);
     // ctx.fillRect(x, y, 3, 3);
-    ctx.arc(x, y, 1.8, 0, Math.PI * 2);
+    ctx.arc(x, y, 2.8, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = 'rgba(245,87,245,0.73)';
+     ctx.strokeStyle = 'rgb(0,0,0)';
 
 }
 
+const table = document.getElementById('results-table');
+const observer = new MutationObserver(function () {
+    drawGraph();
+    drawPointsFromTable();});
+
+// Настройка наблюдателя для отслеживания изменений внутри таблицы
+const observerConfig = { childList: true, subtree: true };
+observer.observe(table, observerConfig);
 
 
 function drawPointsFromTable() {
+     console.log("jopaaaaa");
     var table = document.getElementById('results-table'); // Получаем таблицу по её id
     var rows = table.getElementsByTagName('tr'); // Получаем все строки таблицы
 // alert(rValue);
     // Проходимся по каждой строке таблицы, начиная с 1, чтобы пропустить заголовок
     for (let i = 1; i < rows.length; i++) {
         let cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
+        if (cells.length >= 5) {
         let x = cells[0].innerText; // Значение X в первой ячейке
         let y = cells[1].innerText; // Значение Y во второй ячейке
         let r = cells[2].innerText; // Значение R
@@ -177,8 +195,11 @@ function drawPointsFromTable() {
         if (r==rValue){
             console.log("sdfsdf");
         drawPoint(x, y, result=="kill");}
-    }
+    }}
 }
+
+
+
 
 function drawArrow(context, fromX, fromY, toX, toY) {
     context.beginPath();

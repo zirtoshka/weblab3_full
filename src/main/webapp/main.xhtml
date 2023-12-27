@@ -10,8 +10,12 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/buttons.css"/>
+<!--    <link rel="stylesheet" href="assets/css/table.css"/>-->
+
     <title>puk puk 3</title>
-    <h:outputScript src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js" type="text/javascript" charset="UTF-8" />
+    <h:outputScript src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js" type="text/javascript"
+                    charset="UTF-8"/>
 </h:head>
 
 <h:body>
@@ -21,132 +25,152 @@
 
     <div class="container">
 
-        <h:form id="user-request">
-            <h:outputLabel for="x" value="X:"/>
-            <h:inputText
-                    id="x"
-                    value="#{client.coordinates.x}"
-                    required="true"
-                    converterMessage="It should be a number"
-                    requiredMessage="This is a necessary parameter"
-                    readonly="true">
-                <f:validator validatorId="formValidator" for="x"/>
-            </h:inputText>
-            <h:message for="x" styleClass="error"/>
-
-            <p:commandButton value="-5" ajax="true" update="x" action="#{client.updateXWithValue(-5)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="-4" ajax="true" update="x" action="#{client.updateXWithValue(-4)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="-3" ajax="true" update="x" action="#{client.updateXWithValue(-3)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="-2" ajax="true" update="x" action="#{client.updateXWithValue(-2)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="-1" ajax="true" update="x" action="#{client.updateXWithValue(-1)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="0" ajax="true" update="x" action="#{client.updateXWithValue(0)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="1" ajax="true" update="x" action="#{client.updateXWithValue(1)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="2" ajax="true" update="x" action="#{client.updateXWithValue(2)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-            <p:commandButton value="3" ajax="true" update="x" action="#{client.updateXWithValue(3)}">
-                <p:ajax update="x"/>
-            </p:commandButton>
-
-
-            <p>
-                <label for="y">Y: </label>
-                <h:inputText
-                        id="y"
-                        value="#{client.coordinates.y}"
+        <div class="formocka">
+            <h:form id="user-request">
+                <h:outputLabel for="x" value="X:"/>
+                <p:inputText
+                        id="x"
+                        value="#{client.coordinates.x}"
                         required="true"
                         converterMessage="It should be a number"
-                        requiredMessage="This is a necessary parameter">
-                    <f:validator validatorId="formValidator" for="y"/>
-                </h:inputText>
-                <h:message for="y" styleClass="error"/>
-            </p>
-
-            <p>
-                <h:outputLabel for="r" value="R:"/>
-                <p:inputText id="r"
-                             required="true"
-                             requiredMessage="This is a necessary parameter"
-                             validatorMessage="The value must be from 2 to 5"
-                             value="#{client.coordinates.r}"
-                             minValue="2" maxValue="5"
-                             readonly="true"
-
-                >
-                    <f:validator validatorId="formValidator" for="r"/>
+                        requiredMessage="This is a necessary parameter"
+                        readonly="true"
+                style="width: 8%">
+                    <f:validator validatorId="formValidator" for="x"/>
                 </p:inputText>
-                <p:slider for="r" minValue="2" maxValue="5" step="0.1" range="false"
-                          style="width:200px; background-color: blueviolet"
-                          id="slider"
-                          onSlideEnd="updateR(event, ui)"/>
-                <h:message for="r" styleClass="error"/>
-            </p>
+                <h:message for="x" styleClass="error"/>
+
+                <p:commandButton value="-5" ajax="true" update="x" action="#{client.updateXWithValue(-5)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+                <p:commandButton value="-4" ajax="true" update="x" action="#{client.updateXWithValue(-4)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+                <p:commandButton value="-3" ajax="true" update="x" action="#{client.updateXWithValue(-3)}"
+                                 styleClass="rounded-button ">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+
+                <p:commandButton value="-2" ajax="true" update="x" action="#{client.updateXWithValue(-2)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+                <p:commandButton value="-1" ajax="true" update="x" action="#{client.updateXWithValue(-1)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+                <p:commandButton value="0" ajax="true" update="x" action="#{client.updateXWithValue(0)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+
+                <p:commandButton value="1" ajax="true" update="x" action="#{client.updateXWithValue(1)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+                <p:commandButton value="2" ajax="true" update="x" action="#{client.updateXWithValue(2)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
+                <p:commandButton value="3" ajax="true" update="x" action="#{client.updateXWithValue(3)}"
+                                 styleClass="rounded-button">
+                    <p:ajax update="x"/>
+                </p:commandButton>
 
 
-            <h:commandButton value="Make Remote Request" action="#{client.makeRemoteRequest}"/>
+                <p>
+                    <label for="y">Y: </label>
+                    <p:inputText
+                            id="y"
+                            value="#{client.coordinates.y}"
+                            required="true"
+                            converterMessage="It should be a number"
+                            requiredMessage="This is a necessary parameter">
+                        <f:validator validatorId="formValidator" for="y"/>
+                    </p:inputText>
+                    <h:message for="y" styleClass="error"/>
+                </p>
+
+                <p>
+                    <h:outputLabel for="r" value="R:"/>
+                    <p:inputText id="r"
+                                 required="true"
+                                 requiredMessage="This is a necessary parameter"
+                                 validatorMessage="The value must be from 2 to 5"
+                                 value="#{client.coordinates.r}"
+                                 minValue="2" maxValue="5"
+                                 readonly="true"
+                                 style="width: 8%"
+                    >
+                        <f:validator validatorId="formValidator" for="r"/>
+                    </p:inputText>
+                    <p:slider for="r" minValue="2" maxValue="5" step="0.1" range="false"
+                              style="width:50%; background-color: blueviolet"
+                              id="slider"
+                              onSlideEnd="updateR(event, ui)"/>
+                    <h:message for="r" styleClass="error"/>
+                </p>
 
 
-        </h:form>
-        <h:form styleClass="navigate">
-            <h:commandButton action="navigateStart" styleClass="button" value="to start page"/>
-        </h:form>
+                <h:commandButton value="check!" action="#{client.makeRemoteRequest}" styleClass="button"/>
 
 
-        <p:remoteCommand name="addDotFromCanvas" action="#{client.makeCanvasRequest()}" update="results-table"
-                         process="@this"/>
+            </h:form>
+            <h:form styleClass="navigate">
+                <h:commandButton action="navigateStart" styleClass="button" value="to start page" />
+            </h:form>
 
 
-        <!--
-           Table with previous hits
-        -->
-        <h:dataTable id="results-table" value="#{client.currentHits}" var="hit"
-                     columnClasses="x-column,y-column,r-column,time-column,res-column">
-            <h:column>
-                <f:facet name="header">X</f:facet>
-                <h:outputText value="#{hit.x}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Y</f:facet>
-                <h:outputText value="#{hit.y}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">R</f:facet>
-                <h:outputText value="#{hit.r}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Current Time</f:facet>
-                <h:outputText value="#{hit.currentTime}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Result</f:facet>
-                <h:outputText value="#{hit.result ? 'kill' : 'miss'}"
-                              styleClass="#{hit.result ? 'color:green' : 'color:red'}"/>
-            </h:column>
-        </h:dataTable>
+            <p:remoteCommand name="addDotFromCanvas" action="#{client.makeCanvasRequest()}" update="results-table"
+                             process="@this"/>
 
+        </div>
 
         <div class="graph-canvas">
             <canvas width="517" height="520" id="coordinateCanvas">
             </canvas>
         </div>
+        <!--
+           Table with previous hits
+        -->
+        <div class="tablichka">
+            <p:dataTable id="results-table" value="#{client.currentHits}" var="hit"
+                         columnClasses="x-column,y-column,r-column,time-column,res-column"
+                         rows="7" paginator="true"
+                         emptyMessage="No records found -_-">
+                <p:column>
+                    <f:facet name="header">X</f:facet>
+                    <h:outputText value="#{hit.x}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Y</f:facet>
+                    <h:outputText value="#{hit.y}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">R</f:facet>
+                    <h:outputText value="#{hit.r}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Current Time</f:facet>
+                    <h:outputText value="#{hit.currentTime}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Result</f:facet>
+                    <h:outputText value="#{hit.result ? 'kill' : 'miss'}"
+                                  style="#{hit.result ? 'color: green;' : 'color: red;'}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </div>
+
 
     </div>
 
     <h:outputScript library="js" name="graph.js"></h:outputScript>
+
 
 </h:body>
 
