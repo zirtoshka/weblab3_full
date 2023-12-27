@@ -38,6 +38,7 @@
                         style="width: 8%">
                     <f:validator validatorId="formValidator" for="x"/>
                 </p:inputText>
+                <p:watermark value="0" for="x"/>
                 <h:message for="x" styleClass="error"/>
 
                 <p:commandButton value="-5" ajax="true" update="x" action="#{client.updateXWithValue(-5)}"
@@ -87,7 +88,8 @@
                             value="#{client.coordinates.y}"
                             required="true"
                             converterMessage="It should be a number"
-                            requiredMessage="This is a necessary parameter">
+                            requiredMessage="This is a necessary parameter"
+                            placeholder="0">
                         <f:validator validatorId="formValidator" for="y"/>
                     </p:inputText>
                     <h:message for="y" styleClass="error"/>
@@ -114,7 +116,7 @@
                 </p>
 
 
-                <h:commandButton value="check!" action="#{client.makeRemoteRequest}" styleClass="button"/>
+                <h:commandButton value="check!" action="#{client.makeRemoteRequest}" styleClass="button" />
 
 
             </h:form>
@@ -124,7 +126,7 @@
 
 
             <p:remoteCommand name="addDotFromCanvas" action="#{client.makeCanvasRequest()}" update="results-table"
-                             process="@this"/>
+                              oncomplete=" drawPointsFromTable()"/>
 
         </div>
 
@@ -140,12 +142,8 @@
         <div class="tablichka">
             <p:dataTable id="results-table" value="#{client.currentHits}" var="hit"
                          widgetVar="results-tableWidget"
-                         emptyMessage="No records found -_-"
                          sortMode="single"
-                         paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
-                         rows="10" rowsPerPageTemplate="5,10,15"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
+            editable="true">
                 <p:column>
                     <f:facet name="header">X</f:facet>
                     <h:outputText value="#{hit.x}"/>

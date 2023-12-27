@@ -14,9 +14,11 @@ import java.io.Serializable;
 @Named("coordinates")
 @RequestScoped
 public class Coordinates implements Serializable {
-    private Double x;
-    private Double y;
+    private Double x = 0d;
+    private Double y = 0d;
     private Double r;
     @ToString.Exclude
-    private final double[] xValues = {-5, -4, -3, -2, -1, 0, 1, 2, 3};
+    private final Double[] xValues = {-5d, -4d, -3d, -2d, -1d, 0d, 1d, 2d, 3d};
+
+
 }

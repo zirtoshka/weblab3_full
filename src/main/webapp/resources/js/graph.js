@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 canvas.addEventListener('click', function (event) {
         console.log(rValue);
-
-        // drawPointsFromTable();
         if (rValue == null) showToast("Can't find coordinates, please choose value for r")
         else {
             let loc = windowToCanvas(canvas, event.clientX, event.clientY);
@@ -42,9 +40,8 @@ canvas.addEventListener('click', function (event) {
                     {name: "r", value: r.toString()}
                 ]
             )
-
         }
-        drawPointsFromTable();
+
 
     }
 );
@@ -163,42 +160,33 @@ function drawPoint(x, y, res) {
 
 }
 
-const table = document.getElementById('results-table');
-const observer = new MutationObserver(function () {
-    drawGraph();
-    drawPointsFromTable();
-});
-
-// Настройка наблюдателя для отслеживания изменений внутри таблицы
-const observerConfig = {childList: true, subtree: true};
-observer.observe(table, observerConfig);
-
 
 function drawPointsFromTable() {
     console.log("jopaaaaa");
     var table = document.getElementById('results-table'); // Получаем таблицу по её id
     var rows = table.getElementsByTagName('tr'); // Получаем все строки таблицы
+    console.log('dlinna rows=' + rows.length)
 // alert(rValue);
     // Проходимся по каждой строке таблицы, начиная с 1, чтобы пропустить заголовок
-    for (let i = 1; i < rows.length; i++) {
-        let cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
-        if (cells.length >= 5) {
-            let x = cells[0].innerText; // Значение X в первой ячейке
-            let y = cells[1].innerText; // Значение Y во второй ячейке
-            let r = cells[2].innerText; // Значение R
-            let result = cells[4].innerText; // Значение Result в пятой ячейке
-
-            // Обработка значений x, y, result
-            console.log(r);
-            console.log(rValue);
-            console.log("sssssssss")
-            if (r==rValue){
-                console.log("sdfsdf");
-                drawPoint(x, y, result=="kill");}
-        }}
+    if (rows[1].getElementsByTagName('td').innerText != "Данные не найдены." ) {
+        for (let i = 0; i < rows.length; i++) {
+            let cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
+            console.log(cells);
+            console.log("eto byla zalupa cell" + i);
+            if (cells.length >= 2) {
+                let x = cells[0].innerText; // Значение X в первой ячейке
+                let y = cells[1].innerText; // Значение Y во второй ячейке
+                let r = cells[2].innerText; // Значение R
+                let result = cells[4].innerText; // Значение Result в пятой ячейке
+                console.log(cells, rValue, r);
+                // Обработка значений x, y, resul
+                if (r == rValue.toString()) {
+                    drawPoint(x, y, result == "kill");
+                }
+            }
+        }
+    }
 }
-
-
 
 
 function drawArrow(context, fromX, fromY, toX, toY) {
