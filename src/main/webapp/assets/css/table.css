@@ -1,7 +1,3 @@
-.tablichka {
-    margin-top: 20px;
-}
-
 #results-table {
     width: 100%;
     border-collapse: collapse;
@@ -26,18 +22,4 @@
     background-color: #89e8f5;
 }
 
-#results-table .x-column, #results-table .y-column, #results-table .r-column, #results-table .time-column {
-    width: 10%;
-}
 
-#results-table .res-column {
-    width: 15%;
-}
-
-#results-table td span {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 100%;
-}

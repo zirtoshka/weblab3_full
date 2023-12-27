@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
     <link rel="stylesheet" href="assets/css/buttons.css"/>
-<!--    <link rel="stylesheet" href="assets/css/table.css"/>-->
+    <link rel="stylesheet" href="assets/css/table.css"/>
 
     <title>puk puk 3</title>
     <h:outputScript src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js" type="text/javascript"
@@ -35,7 +35,7 @@
                         converterMessage="It should be a number"
                         requiredMessage="This is a necessary parameter"
                         readonly="true"
-                style="width: 8%">
+                        style="width: 8%">
                     <f:validator validatorId="formValidator" for="x"/>
                 </p:inputText>
                 <h:message for="x" styleClass="error"/>
@@ -119,7 +119,7 @@
 
             </h:form>
             <h:form styleClass="navigate">
-                <h:commandButton action="navigateStart" styleClass="button" value="to start page" />
+                <h:commandButton action="navigateStart" styleClass="button" value="to start page"/>
             </h:form>
 
 
@@ -135,11 +135,17 @@
         <!--
            Table with previous hits
         -->
+        <!--                         columnClasses="x-column,y-column,r-column,time-column,res-column"-->
+
         <div class="tablichka">
             <p:dataTable id="results-table" value="#{client.currentHits}" var="hit"
-                         columnClasses="x-column,y-column,r-column,time-column,res-column"
-                         rows="7" paginator="true"
-                         emptyMessage="No records found -_-">
+                         widgetVar="results-tableWidget"
+                         emptyMessage="No records found -_-"
+                         sortMode="single"
+                         paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+                         rows="10" rowsPerPageTemplate="5,10,15"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records">
                 <p:column>
                     <f:facet name="header">X</f:facet>
                     <h:outputText value="#{hit.x}"/>

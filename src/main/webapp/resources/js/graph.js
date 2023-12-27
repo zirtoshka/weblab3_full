@@ -16,8 +16,6 @@ function updateR(event, ui) {
 }
 
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
     rValue = sessionStorage.getItem("r-value");
     drawGraph();
@@ -26,16 +24,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 canvas.addEventListener('click', function (event) {
-    console.log(rValue);
+        console.log(rValue);
 
-    // drawPointsFromTable();
+        // drawPointsFromTable();
         if (rValue == null) showToast("Can't find coordinates, please choose value for r")
         else {
             let loc = windowToCanvas(canvas, event.clientX, event.clientY);
             let r = rValue;
             let x = xFromCanvas(loc.x);
             let y = yFromCanvas(loc.y);
-           // updateTextInputs(x,y);
+            // updateTextInputs(x,y);
 
             addDotFromCanvas(
                 [
@@ -46,13 +44,13 @@ canvas.addEventListener('click', function (event) {
             )
 
         }
-    drawPointsFromTable();
+        drawPointsFromTable();
 
     }
 );
 
 
- function drawPoints() {
+function drawPoints() {
     let points = JSON.parse(sessionStorage.getItem('points'));
     for (const pointString of points) {
         const point = JSON.parse(pointString);
@@ -61,7 +59,7 @@ canvas.addEventListener('click', function (event) {
     }
 }
 
-function   updateTextInputs(x,y){
+function updateTextInputs(x, y) {
     document.getElementById("x").setAttribute("value", x);
     document.getElementById("y").setAttribute("value", y);
 
@@ -126,15 +124,16 @@ function drawGraph() {
     drawTicks(ctx, centerX, centerY, axisLength, 'y');
     drawAxisLabel(ctx, 'Y', centerX - 20, 10);
 
-    if(rValue){
-    drawAxisLabel(ctx, 'R', centerX + r, centerY - 5);
-    drawAxisLabel(ctx, 'R/2', centerX + r / 2, centerY - 5);
-    drawAxisLabel(ctx, 'R', centerX + 5, centerY - r);
-    drawAxisLabel(ctx, 'R/2', centerX + 5, centerY - r / 2);
-    drawAxisLabel(ctx, '- R', centerX - r, centerY - 5);
-    drawAxisLabel(ctx, '- R/2', centerX - r / 2, centerY - 5);
-    drawAxisLabel(ctx, '- R', centerX + 5, centerY + r);
-    drawAxisLabel(ctx, '- R/2', centerX + 5, centerY + r / 2);}
+    if (rValue) {
+        drawAxisLabel(ctx, 'R', centerX + r, centerY - 5);
+        drawAxisLabel(ctx, 'R/2', centerX + r / 2, centerY - 5);
+        drawAxisLabel(ctx, 'R', centerX + 5, centerY - r);
+        drawAxisLabel(ctx, 'R/2', centerX + 5, centerY - r / 2);
+        drawAxisLabel(ctx, '- R', centerX - r, centerY - 5);
+        drawAxisLabel(ctx, '- R/2', centerX - r / 2, centerY - 5);
+        drawAxisLabel(ctx, '- R', centerX + 5, centerY + r);
+        drawAxisLabel(ctx, '- R/2', centerX + 5, centerY + r / 2);
+    }
 
 
     // points
@@ -142,7 +141,7 @@ function drawGraph() {
 
 }
 
- function drawPoint(x, y, res) {
+function drawPoint(x, y, res) {
 
     x = xToCanvas(x);
     y = yToCanvas(y);
@@ -160,22 +159,23 @@ function drawGraph() {
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = 'rgba(245,87,245,0.73)';
-     ctx.strokeStyle = 'rgb(0,0,0)';
+    ctx.strokeStyle = 'rgb(0,0,0)';
 
 }
 
 const table = document.getElementById('results-table');
 const observer = new MutationObserver(function () {
     drawGraph();
-    drawPointsFromTable();});
+    drawPointsFromTable();
+});
 
 // Настройка наблюдателя для отслеживания изменений внутри таблицы
-const observerConfig = { childList: true, subtree: true };
+const observerConfig = {childList: true, subtree: true};
 observer.observe(table, observerConfig);
 
 
 function drawPointsFromTable() {
-     console.log("jopaaaaa");
+    console.log("jopaaaaa");
     var table = document.getElementById('results-table'); // Получаем таблицу по её id
     var rows = table.getElementsByTagName('tr'); // Получаем все строки таблицы
 // alert(rValue);
@@ -183,19 +183,19 @@ function drawPointsFromTable() {
     for (let i = 1; i < rows.length; i++) {
         let cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
         if (cells.length >= 5) {
-        let x = cells[0].innerText; // Значение X в первой ячейке
-        let y = cells[1].innerText; // Значение Y во второй ячейке
-        let r = cells[2].innerText; // Значение R
-        let result = cells[4].innerText; // Значение Result в пятой ячейке
+            let x = cells[0].innerText; // Значение X в первой ячейке
+            let y = cells[1].innerText; // Значение Y во второй ячейке
+            let r = cells[2].innerText; // Значение R
+            let result = cells[4].innerText; // Значение Result в пятой ячейке
 
-        // Обработка значений x, y, result
-        console.log(r);
-        console.log(rValue);
-        console.log("sssssssss")
-        if (r==rValue){
-            console.log("sdfsdf");
-        drawPoint(x, y, result=="kill");}
-    }}
+            // Обработка значений x, y, result
+            console.log(r);
+            console.log(rValue);
+            console.log("sssssssss")
+            if (r==rValue){
+                console.log("sdfsdf");
+                drawPoint(x, y, result=="kill");}
+        }}
 }
 
 
