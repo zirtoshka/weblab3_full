@@ -31,6 +31,8 @@ public class FormValidator implements Validator {
     protected void validateR(Double r) throws ValidatorException {
         if (r < 2.d || r > 5.d) {
             error(" R should be in range (2;5)");
+        } else {
+            System.out.println("gnida");
         }
     }
 

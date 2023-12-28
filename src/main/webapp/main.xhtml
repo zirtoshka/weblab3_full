@@ -97,26 +97,23 @@
 
                 <p>
                     <h:outputLabel for="r" value="R:"/>
-                    <p:inputText id="r"
-                                 required="true"
-                                 requiredMessage="This is a necessary parameter"
-                                 validatorMessage="The value must be from 2 to 5"
-                                 value="#{client.coordinates.r}"
-                                 minValue="2" maxValue="5"
-                                 readonly="true"
-                                 style="width: 8%"
-                    >
-                        <f:validator validatorId="formValidator" for="r"/>
-                    </p:inputText>
+
+                    <h:outputText id="r_output" value="#{client.coordinates.r}"/>
+
+                    <h:inputHidden id="r" value="#{client.coordinates.r}" required="true"/>
+
+
                     <p:slider for="r" minValue="2" maxValue="5" step="0.1" range="false"
                               style="width:50%; background-color: blueviolet"
                               id="slider"
-                              onSlideEnd="updateR(event, ui)"/>
+                              onSlideEnd="updateR(event, ui)"
+                              display="r_output" displayTemplate="{value}"
+                    />
                     <h:message for="r" styleClass="error"/>
                 </p>
 
 
-                <h:commandButton value="check!" action="#{client.makeRemoteRequest}" styleClass="button" />
+                <h:commandButton value="check!" action="#{client.makeRemoteRequest}" styleClass="button"/>
 
 
             </h:form>
@@ -126,7 +123,7 @@
 
 
             <p:remoteCommand name="addDotFromCanvas" action="#{client.makeCanvasRequest()}" update="results-table"
-                              oncomplete=" drawPointsFromTable()"/>
+                             oncomplete=" drawPointsFromTable()"/>
 
         </div>
 
@@ -143,7 +140,7 @@
             <p:dataTable id="results-table" value="#{client.currentHits}" var="hit"
                          widgetVar="results-tableWidget"
                          sortMode="single"
-            editable="true">
+                         editable="true">
                 <p:column>
                     <f:facet name="header">X</f:facet>
                     <h:outputText value="#{hit.x}"/>

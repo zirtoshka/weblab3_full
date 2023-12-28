@@ -5,12 +5,20 @@ const pxR = 50;
 const ctx = canvas.getContext('2d');
 
 var sessionStorage = window.sessionStorage;
+
 var rValue = sessionStorage.getItem("r-value");
+//var rValue = sessionStorage.getItem("r-value");
 
-
+function toValidString(r){
+    if (Number.isInteger(r)){
+        return r+'.0'
+    } else {
+        return r
+    }
+}
 function updateR(event, ui) {
-    rValue = ui.value;
-    sessionStorage.setItem("r-value", rValue);
+    sessionStorage.setItem("r-value", toValidString(ui.value));
+    rValue = sessionStorage.getItem("r-value");
     drawGraph();
     drawPointsFromTable();
 }
@@ -25,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 canvas.addEventListener('click', function (event) {
         console.log(rValue);
-        if (rValue == null) showToast("Can't find coordinates, please choose value for r")
+        if (rValue == null) alert("Can't find coordinates, please choose value for r")
         else {
             let loc = windowToCanvas(canvas, event.clientX, event.clientY);
             let r = rValue;
@@ -180,7 +188,8 @@ function drawPointsFromTable() {
                 let result = cells[4].innerText; // Значение Result в пятой ячейке
                 console.log(cells, rValue, r);
                 // Обработка значений x, y, resul
-                if (r == rValue.toString()) {
+
+                if (r == toValidString(rValue).toString()) {
                     drawPoint(x, y, result == "kill");
                 }
             }

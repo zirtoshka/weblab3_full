@@ -52,7 +52,7 @@ public class ClientBean implements Serializable {
 //            return Double.parseDouble(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(name));
 //        };
         try {
-            System.out.println(coordinates.getY() + "it is y from user");
+            System.out.println(coordinates.getR() + "it is y from user");
             if (!Validation.validate(coordinates)) {
                 System.out.println("Not valid");
                 throw new NumberFormatException();
