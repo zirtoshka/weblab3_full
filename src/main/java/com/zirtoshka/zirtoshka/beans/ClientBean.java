@@ -77,11 +77,14 @@ public class ClientBean implements Serializable {
                 double y = Double.parseDouble(yValue.trim());
                 double r = Double.parseDouble(rValue.trim());
                 double currX=coordinates.getX();
+                double currY=coordinates.getY();
+
                 coordinates.setX(x);
                 coordinates.setY(y);
                 coordinates.setR(r);
                 makeRequest(coordinates);
                 coordinates.setX(currX);
+                coordinates.setY(currY);
             } else {
                 System.out.println(xValue);
                 System.out.println(yValue);
