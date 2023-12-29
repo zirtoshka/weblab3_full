@@ -10,13 +10,16 @@ import lombok.ToString;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.ManagedProperty;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.function.Function;
+
 
 
 @Getter
@@ -47,20 +50,18 @@ public class ClientBean implements Serializable {
         makeRequest(this.coordinates);
     }
 
+
+
     public void makeRemoteRequest() {
-//        Function<String, Double> getParam = (name) -> {
-//            return Double.parseDouble(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(name));
-//        };
         try {
-            System.out.println(coordinates.getR() + "it is y from user");
             if (!Validation.validate(coordinates)) {
                 System.out.println("Not valid");
                 throw new NumberFormatException();
             }
-//            Coordinates coordinates = new Coordinates(getParam.apply("x"), getParam.apply("y"), getParam.apply("r"));
             makeRequest(coordinates);
         } catch (NullPointerException | NumberFormatException exception) {
             System.out.println("error in params");
+
         }
     }
 
@@ -75,20 +76,19 @@ public class ClientBean implements Serializable {
                 double x = Double.parseDouble(xValue.trim());
                 double y = Double.parseDouble(yValue.trim());
                 double r = Double.parseDouble(rValue.trim());
-
+                double currX=coordinates.getX();
                 coordinates.setX(x);
                 coordinates.setY(y);
                 coordinates.setR(r);
                 makeRequest(coordinates);
+                coordinates.setX(currX);
             } else {
                 System.out.println(xValue);
                 System.out.println(yValue);
                 System.out.println(rValue);
-                System.out.println("ОНО ПОЧЕМУ ТО НАЛ НО ПОЧЕМУ");
             }
         } catch ( IllegalArgumentException e) {
             e.printStackTrace();
-            // Обработка ошибок при парсинге или некорректных данных
         }
     }
 

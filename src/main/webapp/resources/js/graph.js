@@ -6,18 +6,11 @@ const ctx = canvas.getContext('2d');
 
 var sessionStorage = window.sessionStorage;
 
-var rValue = sessionStorage.getItem("r-value");
-//var rValue = sessionStorage.getItem("r-value");
+var rValue = sessionStorage.getItem("r-value") == null ? sessionStorage.setItem("r-value", "2.0") : sessionStorage.getItem("r-value");
 
-function toValidString(r){
-    if (Number.isInteger(r)){
-        return r+'.0'
-    } else {
-        return r
-    }
-}
 function updateR(event, ui) {
-    sessionStorage.setItem("r-value", toValidString(ui.value));
+    let rInput = document.getElementById("user-request:r_output");
+    sessionStorage.setItem("r-value", rInput.innerText);
     rValue = sessionStorage.getItem("r-value");
     drawGraph();
     drawPointsFromTable();
@@ -32,14 +25,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 canvas.addEventListener('click', function (event) {
-        console.log(rValue);
         if (rValue == null) alert("Can't find coordinates, please choose value for r")
         else {
             let loc = windowToCanvas(canvas, event.clientX, event.clientY);
             let r = rValue;
             let x = xFromCanvas(loc.x);
             let y = yFromCanvas(loc.y);
-            // updateTextInputs(x,y);
 
             addDotFromCanvas(
                 [
@@ -59,7 +50,6 @@ function drawPoints() {
     let points = JSON.parse(sessionStorage.getItem('points'));
     for (const pointString of points) {
         const point = JSON.parse(pointString);
-        console.log(point.x);
         drawPoint(point.x, point.y, true);
     }
 }
@@ -70,21 +60,7 @@ function updateTextInputs(x, y) {
 
 }
 
-//todo wtf blin
-function clearTable() {
-    sessionStorage.setItem('points', JSON.stringify([]));
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    drawGraph();
-
-    let table = document.getElementById("results-table");
-    let rowCount = table.rows.length;
-    for (let i = rowCount - 1; i > 0; i--) {
-        table.deleteRow(i);
-    }
-
-}
 
 
 function xFromCanvas(x) {
@@ -170,27 +146,23 @@ function drawPoint(x, y, res) {
 
 
 function drawPointsFromTable() {
-    console.log("jopaaaaa");
     var table = document.getElementById('results-table'); // Получаем таблицу по её id
     var rows = table.getElementsByTagName('tr'); // Получаем все строки таблицы
-    console.log('dlinna rows=' + rows.length)
-// alert(rValue);
+
     // Проходимся по каждой строке таблицы, начиная с 1, чтобы пропустить заголовок
     if (rows[1].getElementsByTagName('td').innerText != "Данные не найдены." ) {
         for (let i = 0; i < rows.length; i++) {
             let cells = rows[i].getElementsByTagName('td'); // Получаем ячейки текущей строки
-            console.log(cells);
-            console.log("eto byla zalupa cell" + i);
+
             if (cells.length >= 2) {
                 let x = cells[0].innerText; // Значение X в первой ячейке
                 let y = cells[1].innerText; // Значение Y во второй ячейке
                 let r = cells[2].innerText; // Значение R
                 let result = cells[4].innerText; // Значение Result в пятой ячейке
-                console.log(cells, rValue, r);
                 // Обработка значений x, y, resul
 
-                if (r == toValidString(rValue).toString()) {
-                    drawPoint(x, y, result == "kill");
+                if (Number.parseFloat(r) === Number.parseFloat(rValue)) {
+                    drawPoint(x, y, result === "kill");
                 }
             }
         }

@@ -27,19 +27,10 @@
 
         <div class="formocka">
             <h:form id="user-request">
-                <h:outputLabel for="x" value="X:"/>
-                <p:inputText
-                        id="x"
-                        value="#{client.coordinates.x}"
-                        required="true"
-                        converterMessage="It should be a number"
-                        requiredMessage="This is a necessary parameter"
-                        readonly="true"
-                        style="width: 8%">
-                    <f:validator validatorId="formValidator" for="x"/>
-                </p:inputText>
-                <p:watermark value="0" for="x"/>
-                <h:message for="x" styleClass="error"/>
+                <h:outputLabel  for ="x" value="X:"/>
+
+                <h:outputText id="x" value="#{client.coordinates.x}" />
+
 
                 <p:commandButton value="-5" ajax="true" update="x" action="#{client.updateXWithValue(-5)}"
                                  styleClass="rounded-button">
@@ -79,7 +70,6 @@
                                  styleClass="rounded-button">
                     <p:ajax update="x"/>
                 </p:commandButton>
-
 
                 <p>
                     <label for="y">Y: </label>
